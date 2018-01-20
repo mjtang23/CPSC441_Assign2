@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en-ca" data-lang-default="en-ca">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+		<title>cpsc441-assignment-2-trace - CPSC 441 L01 - (Winter 2017) - Computer Networks</title>
+		<link rel="stylesheet" type="text/css" href="https://s.brightspace.com/lib/bsi/10.6.2-4/bsi.min.css" />
+		<link rel="stylesheet" type="text/css" href="https://s.brightspace.com/lib/reset-css/1.0.0/reset.css" />
+		<link rel="stylesheet" type="text/css" href="/d2l/common/css/D2L.LP.Web.Desktop.default.css?v=10.6.9.5092-98" />
+		<link rel="stylesheet" type="text/css" href="/d2l/common/css/D2L.LP.Web.Desktop.DaylightOff.default.css?v=10.6.9.5092-98" />
+		<link rel="stylesheet" type="text/css" href="/d2l/common/css/D2L.LE.Content.Web.Desktop.default.css?v=10.6.9.5092-98" />
+		<link rel="stylesheet" type="text/css" href="/d2l/common/css/D2L.LE.ToolIntegration.Content.default.css?v=10.6.9.5092-98" />
+		<link rel="stylesheet" type="text/css" href="/d2l/lp/navbars/171124/themestyle/5009?navbarHtmlId=d2l_navbar&amp;version=36&amp;isrtl=0&amp;v=10.6.9.5092-98" />
+		<link rel="stylesheet" type="text/css" href="/d2l/lp/fonts/ptsansregular?v=10.6.9.5092-98" />
+		<link rel="stylesheet" type="text/css" href="/d2l/common/css/D2L.LP.Web.Desktop.Print.default.css?v=10.6.9.5092-98" media="print" />
+		<style type="text/css">
+		/*<![CDATA[*/
+			.vui-typography{ font-family:'PT Sans', sans-serif; font-size:13px; }.d2l-font-inverse{ font-size:11px;line-height:1.77em; }.d2l-font-magnify { font-size:13px; }
+			.d2l_1_13_604 {background-color:#000000;}
+			.d2l_1_14_853 {table-layout: Inherit;}
+			.d2l_1_15_876 {vertical-align:middle;}
+			.d2l_1_16_213 {background-image:url('https://s.brightspace.com/lib/ilp/d2l/img/0/sprites/D2L.LP.Main.018146DBA2CCE7B7AD06AA64E846FA9D.png');background-position:0 -774px;background-repeat:no-repeat;width:18px;height:18px;}
+			.d2l_1_17_915 {background-image:url('https://s.brightspace.com/lib/ilp/d2l/img/0/sprites/D2L.LP.Main.018146DBA2CCE7B7AD06AA64E846FA9D.png');background-position:-9px -738px;background-repeat:no-repeat;width:9px;height:18px;}
+			.d2l_1_18_56 {float:left;}
+			.d2l_1_20_703 {background-image:url('https://s.brightspace.com/lib/ilp/d2l/img/0/sprites/D2L.LP.Main.018146DBA2CCE7B7AD06AA64E846FA9D.png');background-position:-10px -355px;background-repeat:no-repeat;width:10px;height:10px;}
+			.d2l_1_21_656 {max-width:375px;}
+			.d2l_1_22_570 {min-width:375px;}
+			.d2l_1_24_617 {background-image:url('https://s.brightspace.com/lib/ilp/d2l/img/0/sprites/D2L.LP.Main.018146DBA2CCE7B7AD06AA64E846FA9D.png');background-position:0 -80px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_25_970 {background-image:url('https://s.brightspace.com/lib/ilp/d2l/img/0/sprites/D2L.LP.Main.018146DBA2CCE7B7AD06AA64E846FA9D.png');background-position:0 -96px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_26_348 {max-width:350px;}
+			.d2l_1_27_696 {min-width:350px;}
+			.d2l_1_29_562 {padding:0px 10px;}
+			.d2l_1_30_1 {float:right;}
+			.d2l_1_31_102 {margin:5px;}
+			.d2l_1_32_43 {background-image:url('/d2l/img/0/Email.Main.actNavBarLinkEmail.png?v=10.6.9.5092-98');background-position:0 0;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_33_508 {background-image:url('https://s.brightspace.com/lib/ilp/d2l/img/0/sprites/D2L.LP.Main.018146DBA2CCE7B7AD06AA64E846FA9D.png');background-position:0 -48px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_34_922 {background-image:url('https://s.brightspace.com/lib/ilp/d2l/img/0/sprites/D2L.LP.Main.018146DBA2CCE7B7AD06AA64E846FA9D.png');background-position:0 -64px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_36_8 {background-image:url('https://s.brightspace.com/lib/ilp/d2l/img/0/sprites/D2L.LP.Main.018146DBA2CCE7B7AD06AA64E846FA9D.png');background-position:0 -16px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_37_34 {background-image:url('https://s.brightspace.com/lib/ilp/d2l/img/0/sprites/D2L.LP.Main.018146DBA2CCE7B7AD06AA64E846FA9D.png');background-position:0 -32px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_39_114 {background-image:url('https://s.brightspace.com/lib/ilp/d2l/img/0/sprites/D2L.LP.Main.018146DBA2CCE7B7AD06AA64E846FA9D.png');background-position:0 -492px;background-repeat:no-repeat;width:22px;height:22px;}
+			.d2l_1_40_626 {background-image:url('https://s.brightspace.com/lib/ilp/d2l/img/0/sprites/D2L.LP.Main.018146DBA2CCE7B7AD06AA64E846FA9D.png');background-position:0 -355px;background-repeat:no-repeat;width:10px;height:10px;}
+			.d2l_1_42_875 {margin:10px;}
+			.d2l_1_43_685 {vertical-align:top;}
+			.d2l_1_44_603 {width:1%;}
+			.d2l_1_48_432 {width:500px;}
+			.d2l_1_49_576 {background-position:left top;}
+			.d2l_1_50_645 {padding:1em;}
+			.d2l_1_51_702 {background-image:url('/d2l/img/0/Auth.SessionExpiry.actAlert.png?v=10.6.9.5092-98');}
+			.d2l_1_52_99 {background-position:right top;}
+			.d2l_1_53_451 {padding-right:75px;}
+			.d2l_1_54_778 {min-height:115px;}
+			.d2l_1_55_90 {background-image:url('/d2l/img/0/Auth.SessionExpiry.actCheck.png?v=10.6.9.5092-98');}
+			.d2l_1_56_280 {padding:3.4em;}
+			.d2l_1_57_524 {vertical-align:baseline;}
+			.d2l_1_58_661 {width:100%;}
+			.d2l_1_60_807 {margin-top:0.5em;margin-bottom:10px;}
+			.d2l_1_61_738 {table-layout: Fixed;}
+			.d2l_1_62_563 {width:34px;}
+			.d2l_1_63_277 {margin-right:10px;}
+			.d2l_1_64_516 {background-image:url('https://s.brightspace.com/lib/ilp/d2l/img/0/sprites/D2L.LP.FileTypes.CA6745BCD017CC7C59ADD51AC07B91A9.png');background-position:0 -288px;background-repeat:no-repeat;width:24px;height:24px;}
+			.d2l_1_67_624 {background-image:url('/d2l/img/0/Content.main.actLeaveFeedback.gif?v=10.6.9.5092-98');}
+			.d2l_1_69_277 {background-image:url('/d2l/img/0/eP.Common.iconReflectionBlack_16.png?v=10.6.9.5092-98');}
+			.d2l_1_71_178 {background-image:url('/d2l/img/0/Content.Main.actDownload.gif?v=10.6.9.5092-98');}
+			.d2l_1_73_940 {background-image:url('/d2l/img/0/Content.Main.actMetadata.gif?v=10.6.9.5092-98');}
+			.d2l_1_75_324 {background-image:url('https://s.brightspace.com/lib/ilp/d2l/img/0/sprites/D2L.LP.Main.018146DBA2CCE7B7AD06AA64E846FA9D.png');background-position:0 -365px;background-repeat:no-repeat;width:10px;height:7px;}
+			.d2l_1_76_780 {margin:5px 5px 0px 5px;}
+			.d2l_1_80_339 {background-image:url('/d2l/img/0/Content.Main.actBookmarkTopic24.png?v=10.6.9.5092-98');background-position:0 0;background-repeat:no-repeat;width:36px;height:28px;}
+			.d2l_1_81_443:hover,.d2l_1_81_443:focus,.d2l_1_81_443:active {background-image:url('/d2l/img/0/Content.Main.actBookmarkTopicHover24.png?v=10.6.9.5092-98');background-position:0 0;background-repeat:no-repeat;width:36px;height:28px;}
+			.d2l_1_82_263 {background-image:url('/d2l/img/0/Content.Main.actRemoveBookmark24.png?v=10.6.9.5092-98');background-position:0 0;background-repeat:no-repeat;width:36px;height:28px;}
+			.d2l_1_83_85:hover,.d2l_1_83_85:focus,.d2l_1_83_85:active {background-image:url('/d2l/img/0/Content.Main.actRemoveBookmarkHover24.png?v=10.6.9.5092-98');background-position:0 0;background-repeat:no-repeat;width:36px;height:28px;}
+			.d2l_1_85_298:before {content:url('/d2l/img/0/Content.Main.actFullScreen16.png?v=10.6.9.5092-98');}
+			.d2l_1_86_2 {margin-left:10px;}
+			.d2l_1_87_591 {background-image:url('/d2l/img/0/Framework.Iterator.actPrevMvc.png?v=10.6.9.5092-98');background-position:0 0;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_88_728 {background-image:url('/d2l/img/0/Framework.Iterator.actNextMvc.png?v=10.6.9.5092-98');background-position:0 0;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_89_832 {margin-bottom:10px;}
+			.d2l_1_90_296 {padding:20px 0px 0px 0px;}
+			.d2l_1_91_482:before {content:url('/d2l/img/0/eP.Common.iconReflectionBlack_16.png?v=10.6.9.5092-98');}
+			.d2l_1_92_372:before {content:url('/d2l/img/0/Content.Main.actDownload.gif?v=10.6.9.5092-98');}
+			.d2l_1_93_616 {background-image:url('https://s.brightspace.com/lib/ilp/d2l/img/0/sprites/D2L.LP.Main.018146DBA2CCE7B7AD06AA64E846FA9D.png');background-position:0 -1206px;background-repeat:no-repeat;width:16px;height:16px;}
+			.d2l_1_94_306 {padding:20px 0px;}
+			.d2l_1_97_598 {padding:10px;}
+			.d2l_1_98_168 {border-right:1px solid #DDD;border-bottom:1px solid #DDD;border-left:1px solid #DDD;}
+			.d2l_1_99_804 {padding:0px 0px 10px 0px;}
+			.d2l_1_100_180 {background-image:url('/d2l/img/0/Content.ContentStructureBrowser.infVisited.png?v=10.6.9.5092-98');}
+			.d2l_1_101_6 {padding-left:25px;}
+			.d2l_1_102_222 {min-height:20px;}
+		/*]]>*/
+		</style>
+	</head>
+	<body class="d2l-body d2l-typography vui-typography">
+		<div class="d2l-background-global"><div></div>
+		</div>
+		<div class="d2l-background-left"><div><div></div>
+			</div>
+		</div>
+		<div class="d2l-background-right"><div><div></div>
+			</div>
+		</div>
+		<a href="#d2l_1_12_134" class="d2l-skipnav" id="d2l_skipnav">skip to main content</a>
+		<header><div class="d2l-minibar-placeholder d2l-minibar-placeholder-fixed" id="d2l_minibar_placeholder" aria-label="Minibar">
+			<div class="d2l-minibar d2l-min-width d2l-minibar-light d2l_1_13_604" id="d2l_minibar">
+				<div class="d2l-max-width">
+					<div class="d2l-minibar-padding">
+						<div class="d2l-box-layout d2l_1_14_853">
+							<div class="d2l-box d2l-box-h d2l_1_15_876">
+								<a class="d2l-minibar-home vui-link d2l-link" href="/d2l/lp/ouHome/defaultHome.d2l"><img class="d2l_1_16_213" src="/d2l/img/lp/pixel.gif" alt="" /><span class="d2l-minibar-home-text">Home</span></a><span class="d2l-minibar-breadcrumb"><span class="d2l_1_17_915"></span><span class="d2l-menuflyout-spacer">&nbsp;</span></span><div class="d2l-menuflyout-link d2l-menuflyout-closed d2l-menuflyout-light d2l_1_18_56" id="d2l_1_19_475">
+									<div class="d2l-menuflyout-link-hover">
+										<a class="d2l-menuflyout-link-link" title="CPSC 441 L01 - (Winter 2017) - Computer Networks" href="/d2l/home/171124">CPSC 441 L01 - (Winter 2017) - Computer Networks</a><a class="d2l-menuflyout-opener d2l-clickable" title="Select a course..." onclick="return false;"><div class="d2l-textblock d2l-offscreen">Select a course...</div>
+										<span class="d2l-menuflyout-link-arrow d2l_1_20_703"></span><span class="d2l-menuflyout-spacer">&nbsp;</span></a><div class="d2l-clear"></div>
+									</div>
+									<div class="d2l-menuflyout-contents d2l_1_21_656 d2l_1_22_570" id="d2l_1_23_80">
+										<div class="d2l-menuflyout-group-container">
+											<div id="courseSelectorId" class="d2l-placeholder d2l-placeholder-live">
+												<div class="d2l-loading"><div class="d2l-textblock d2l-offscreen">Loading...</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="d2l-box d2l-box-h d2l-minibar-right d2l_1_15_876">
+								<div class="d2l-minibar-activity">
+									<div class="d2l-menuflyout d2l-menuflyout-closed d2l-menuflyout-light d2l_1_18_56" id="d2l_1_9_518">
+										<a class="d2l-menuflyout-opener d2l-clickable" title="Message alerts" onclick="return false;" aria-haspopup="true">
+											<span class="d2l-menuflyout-text d2l-offscreen">Message alerts</span><div class="d2l-minibar-activity-buckethandle alert_bucket_Messages">
+												<div class="d2l-minibar-activity-message-new d2l-hidden"></div><img src="/d2l/img/lp/pixel.gif" alt="" class="Alert d2l_1_24_617" /><img src="/d2l/img/lp/pixel.gif" alt="" class="OpenAlert d2l-hidden d2l_1_25_970" /><span class="d2l-menuflyout-spacer">&nbsp;</span></div>
+											<div class="d2l-clear"></div>
+										</a>
+										<div class="d2l-menuflyout-contents d2l-menuflyout-contents-left d2l_1_26_348 d2l_1_27_696" id="d2l_1_28_661">
+											<div class="d2l-menuflyout-group-container">
+												<div class="d2l_1_29_562">
+													<div>
+														<div>
+															<a class="d2l-text-imagelink d2l_1_30_1 d2l_1_31_102" href="/d2l/lms/email/frame.d2l?ou=171124">
+																<img class="d2l-text-imagelink-img d2l_1_32_43" src="/d2l/img/lp/pixel.gif" alt="" /><span class="d2l-text-imagelink-text">Go to Email</span>
+															</a>
+															<div class="d2l-clear"></div>
+														</div>
+														<div id="AB_DL_PH_Messages" class="d2l-placeholder d2l-placeholder-live">
+															<div class="d2l-loading"><div class="d2l-textblock d2l-offscreen">Loading...</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="d2l-minibar-separator"></div><div class="d2l-menuflyout d2l-menuflyout-closed d2l-menuflyout-light d2l_1_18_56" id="d2l_1_10_901">
+										<a class="d2l-menuflyout-opener d2l-clickable" title="Update alerts" onclick="return false;" aria-haspopup="true">
+											<span class="d2l-menuflyout-text d2l-offscreen">Update alerts</span><div class="d2l-minibar-activity-buckethandle alert_bucket_Grades">
+												<div class="d2l-minibar-activity-message-new d2l-hidden"></div><img src="/d2l/img/lp/pixel.gif" alt="" class="Alert d2l_1_33_508" /><img src="/d2l/img/lp/pixel.gif" alt="" class="OpenAlert d2l-hidden d2l_1_34_922" /><span class="d2l-menuflyout-spacer">&nbsp;</span></div>
+											<div class="d2l-clear"></div>
+										</a>
+										<div class="d2l-menuflyout-contents d2l-menuflyout-contents-left d2l_1_26_348 d2l_1_27_696" id="d2l_1_35_576">
+											<div class="d2l-menuflyout-group-container">
+												<div class="d2l_1_29_562">
+													<div>
+														<div id="AB_DL_PH_Grades" class="d2l-placeholder d2l-placeholder-live">
+															<div class="d2l-loading"><div class="d2l-textblock d2l-offscreen">Loading...</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="d2l-minibar-separator"></div><div class="d2l-menuflyout d2l-menuflyout-closed d2l-menuflyout-light d2l_1_18_56" id="d2l_1_11_207">
+										<a class="d2l-menuflyout-opener d2l-clickable" title="Subscription alerts" onclick="return false;" aria-haspopup="true">
+											<span class="d2l-menuflyout-text d2l-offscreen">Subscription alerts</span><div class="d2l-minibar-activity-buckethandle alert_bucket_Alerts">
+												<div class="d2l-minibar-activity-message-new d2l-hidden"></div><img src="/d2l/img/lp/pixel.gif" alt="" class="Alert d2l_1_36_8" /><img src="/d2l/img/lp/pixel.gif" alt="" class="OpenAlert d2l-hidden d2l_1_37_34" /><span class="d2l-menuflyout-spacer">&nbsp;</span></div>
+											<div class="d2l-clear"></div>
+										</a>
+										<div class="d2l-menuflyout-contents d2l-menuflyout-contents-left d2l_1_26_348 d2l_1_27_696" id="d2l_1_38_825">
+											<div class="d2l-menuflyout-group-container">
+												<div class="d2l_1_29_562">
+													<div>
+														<div id="AB_DL_PH_Alerts" class="d2l-placeholder d2l-placeholder-live">
+															<div class="d2l-loading"><div class="d2l-textblock d2l-offscreen">Loading...</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div><div class="d2l-menuflyout d2l-menuflyout-closed d2l-menuflyout-light">
+									<a class="d2l-menuflyout-opener d2l-clickable" onclick="return false;" aria-haspopup="true">
+										<img class="d2l-image d2l-menuflyout-icon d2l-menuflyout-icon-open d2l_1_39_114" src="/d2l/img/lp/pixel.gif" alt="" />
+										<span class="d2l-menuflyout-text">Marcus Tang</span><span class="d2l-menuflyout-arrow d2l-menuflyout-arrow-open d2l_1_40_626"></span><span class="d2l-menuflyout-arrow d2l_1_20_703 d2l-menuflyout-arrow-closed"></span>
+										<div class="d2l-clear"></div>
+									</a>
+									<div class="d2l-menuflyout-contents d2l-menuflyout-contents-left" id="d2l_1_41_378">
+										<div class="d2l-menuflyout-group-container">
+											<div>
+												<ul class="d2l-list">
+													<li>
+														<ul style="list-style:none;margin:10px;padding:0;">
+															<li>
+																<span style="white-space:nowrap;"><a class="vui-link d2l-link" href="/d2l/lp/profile/profile_edit.d2l?ou=171124" onclick="D2L.O(&quot;__g1&quot;,0)();">Profile</a>
+																</span></li>
+															<li>
+																<span style="white-space:nowrap;"><a class="vui-link d2l-link" href="/d2l/Notifications/Settings?ou=171124" onclick="D2L.O(&quot;__g1&quot;,1)();">Notifications</a>
+																</span></li>
+															<li>
+																<span style="white-space:nowrap;"><a class="vui-link d2l-link" href="/d2l/lp/preferences/preferences_main/preferences_main.d2l?ou=171124" onclick="D2L.O(&quot;__g1&quot;,2)();">Account Settings</a>
+																</span></li>
+														</ul>
+														<hr class="d2l-minibar-menu-separator" /></li>
+													<li>
+														<ul style="list-style:none;margin:10px;padding:0;">
+															<li>
+																<span style="white-space:nowrap;"><a class="vui-link d2l-link" href="/d2l/le/userprogress/65570/171124/Summary?searchString=&amp;sortDirection=0&amp;sortField=LastName">Progress</a>
+																</span></li>
+														</ul>
+														<hr class="d2l-minibar-menu-separator" /></li>
+													<li>
+														<span style="white-space:nowrap;"><a class="vui-link d2l-link d2l_1_42_875" href="javascript:void(0);" onclick="D2L.O(&quot;__g1&quot;,3)();return false;">Log Out</a>
+														</span></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="d2l-clear"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="d2l_navbar" class="d2l-navbar d2l-font-inverse d2l-min-width">
+			<h2 class="d2l-offscreen">Navigation</h2>
+			<div class="d2l-navbar-container d_nb_cFull">
+				<div class="d2l-max-width">
+					<div class="d2l-navbar-container d_nb_cGlobal">
+						<div class="d2l-box-layout d2l_1_14_853">
+							<div class="d2l-box d2l-box-v d2l_1_43_685">
+								<div class="d2l-box-layout d2l_1_14_853">
+									<div class="d2l-box d2l-box-h d2l_1_44_603 d2l_1_43_685">
+									</div>
+									<div class="d2l-box d2l-box-h d2l_1_43_685">
+										<div class="d2l-navbar-container d_nb_cMiddle">
+											<div class="d2l-navbar-area d_nb_pMainLinks d2l-font-magnify">
+												<div class="d_nb_pd">
+													<div class="d_nb_i">
+														<ul class="d2l-navbar-area-list">
+															<li class="d2l-navbar-area-list-item-last">
+																<div class="d2l-navbar-item">
+																	<span class="d2l-navbar-text">
+																		<span>CPSC 441 L01 - (Winter 2017) - Computer Networks</span></span>
+																</div>
+																<span class="d2l-navbar-sep"></span>
+															</li>
+														</ul>
+													</div>
+													<div class="d2l-clear"></div>
+												</div>
+											</div>
+											<div class="d2l-clear"></div>
+										</div>
+									</div>
+									<div class="d2l-box d2l-box-h d2l_1_44_603 d2l_1_43_685">
+										<a class="d2l-navbar-logo-link vui-outline d2l_1_30_1" href="/d2l/lp/ouHome/defaultHome.d2l" title="Home"><img class="d2l-navbar-image d2l-navbar-image-right" src="/d2l/lp/navbars/6606/theme/viewimage/241923/view?v=10.6.9.5092-98" alt="Home" /></a>
+										<div class="d2l-clear"></div>
+									</div>
+								</div>
+							</div>
+							<div class="d2l-box d2l-box-v d2l_1_43_685">
+								<div class="d2l-navbar-container d_nb_cBottom">
+									<div class="d2l-navbar-area d_nb_pBottomLinks d2l-font-magnify">
+										<div class="d_nb_pd">
+											<div class="d_nb_i">
+												<ul class="d2l-navbar-area-list">
+													<li>
+														<div class="d2l-navbar-item">
+															<a class="d2l-navbar-link" href="/d2l/home/171124"><span>Course Home</span></a></div>
+														<span class="d2l-navbar-sep"></span>
+													</li>
+													<li>
+														<div class="d2l-navbar-item">
+															<a class="d2l-navbar-link" href="/d2l/le/content/171124/Home"><span>Content</span></a></div>
+														<span class="d2l-navbar-sep"></span>
+													</li>
+													<li>
+														<div class="d2l-navbar-item">
+															<a class="d2l-navbar-link" href="/d2l/le/calendar/171124"><span>Calendar</span></a></div>
+														<span class="d2l-navbar-sep"></span>
+													</li>
+													<li>
+														<div class="d2l-navbar-item d2l-navbar-group">
+															<div class="d2l-menuflyout d2l-menuflyout-closed d2l-menuflyout-dark">
+																<a class="d2l-menuflyout-opener d2l-clickable" onclick="return false;" aria-haspopup="true">
+																	<span class="d2l-menuflyout-text">Communication</span><span class="d2l-menuflyout-arrow d2l_1_40_626"></span>
+																	<div class="d2l-clear"></div>
+																</a>
+																<div class="d2l-menuflyout-contents" id="d2l_1_45_344">
+																	<div class="d2l-menuflyout-group-container">
+																		<ul class="d2l-navbar-group-inner">
+																			<li>
+																				<a class="vui-link d2l-link vui-outline" href="/d2l/lms/news/main.d2l?ou=171124"><span>News</span></a></li>
+																			<li>
+																				<a class="vui-link d2l-link vui-outline" href="/d2l/lms/classlist/classlist.d2l?ou=171124"><span>Classlist / Email</span></a></li>
+																			<li>
+																				<a class="vui-link d2l-link vui-outline" href="/d2l/le/171124/discussions/List"><span>Discussions</span></a></li>
+																			<li>
+																				<a class="vui-link d2l-link vui-outline" href="/d2l/lms/chat/chat_list.d2l?ou=171124"><span>Chat</span></a></li>
+																			<li>
+																				<a class="vui-link d2l-link vui-outline" href="/d2l/lms/group/group_list.d2l?ou=171124"><span>Groups</span></a></li>
+																			<li>
+																				<a class="vui-link d2l-link vui-outline" href="/d2l/im/onlinerooms/roomlist.d2l?ou=171124"><span>Online Rooms</span></a></li>
+																		</ul>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<span class="d2l-navbar-sep"></span>
+													</li>
+													<li>
+														<div class="d2l-navbar-item d2l-navbar-group">
+															<div class="d2l-menuflyout d2l-menuflyout-closed d2l-menuflyout-dark">
+																<a class="d2l-menuflyout-opener d2l-clickable" onclick="return false;" aria-haspopup="true">
+																	<span class="d2l-menuflyout-text">Assessments</span><span class="d2l-menuflyout-arrow d2l_1_40_626"></span>
+																	<div class="d2l-clear"></div>
+																</a>
+																<div class="d2l-menuflyout-contents" id="d2l_1_46_631">
+																	<div class="d2l-menuflyout-group-container">
+																		<ul class="d2l-navbar-group-inner">
+																			<li>
+																				<a class="vui-link d2l-link vui-outline" href="/d2l/lms/dropbox/dropbox.d2l?ou=171124"><span>Dropbox</span></a></li>
+																			<li>
+																				<a class="vui-link d2l-link vui-outline" href="/d2l/lms/grades/index.d2l?ou=171124"><span>Grades</span></a></li>
+																			<li>
+																				<a class="vui-link d2l-link vui-outline" href="/d2l/lms/quizzing/quizzing.d2l?ou=171124"><span>Quizzes</span></a></li>
+																			<li>
+																				<a class="vui-link d2l-link vui-outline" href="/d2l/lms/selfassess/selfassess.d2l?ou=171124"><span>Self Assessments</span></a></li>
+																			<li>
+																				<a class="vui-link d2l-link vui-outline" href="/d2l/lms/survey/surveys.d2l?ou=171124"><span>Surveys</span></a></li>
+																		</ul>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<span class="d2l-navbar-sep"></span>
+													</li>
+													<li class="d2l-navbar-area-list-item-last">
+														<div class="d2l-navbar-item d2l-navbar-group">
+															<div class="d2l-menuflyout d2l-menuflyout-closed d2l-menuflyout-dark">
+																<a class="d2l-menuflyout-opener d2l-clickable" onclick="return false;" aria-haspopup="true">
+																	<span class="d2l-menuflyout-text">My Tools</span><span class="d2l-menuflyout-arrow d2l_1_40_626"></span>
+																	<div class="d2l-clear"></div>
+																</a>
+																<div class="d2l-menuflyout-contents" id="d2l_1_47_903">
+																	<div class="d2l-menuflyout-group-container">
+																		<ul class="d2l-navbar-group-inner">
+																			<li>
+																				<a class="vui-link d2l-link vui-outline" href="/d2l/le/calendar/171124"><span>Calendar</span></a></li>
+																			<li>
+																				<a class="vui-link d2l-link vui-outline" href="/d2l/le/userprogress/65570/171124/Summary?searchString=&amp;sortDirection=0&amp;sortField=LastName"><span>Class Progress</span></a></li>
+																			<li>
+																				<a class="vui-link d2l-link vui-outline" href="/d2l/lms/blog/main.d2l?ou=171124"><span>Blog</span></a></li>
+																			<li>
+																				<a class="vui-link d2l-link vui-outline" href="/d2l/ep/171124/dashboard/index"><span>ePortfolio</span></a></li>
+																			<li>
+																				<a class="vui-link d2l-link vui-outline" onclick="D2L.O(&quot;__g1&quot;,4)()" tabindex="0"><span>Glossary</span></a></li>
+																			<li>
+																				<a class="vui-link d2l-link vui-outline" href="/d2l/systemCheck"><span>System Check</span></a></li>
+																			<li>
+																				<a class="vui-link d2l-link vui-outline" href="/d2l/lms/checklist/checklists.d2l?ou=171124"><span>Checklist</span></a></li>
+																			<li>
+																				<a class="vui-link d2l-link vui-outline" href="/d2l/lms/legacy/selfregistration.d2l?ou=171124"><span>Self Registration</span></a></li>
+																			<li>
+																				<a class="vui-link d2l-link vui-outline" href="/d2l/lor/search/search.d2l?ou=171124"><span>LOR</span></a></li>
+																		</ul>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<span class="d2l-navbar-sep"></span>
+													</li>
+												</ul>
+											</div>
+											<div class="d2l-clear"></div>
+										</div>
+									</div>
+									<div class="d2l-clear"></div>
+								</div>
+							</div>
+						</div>
+						<div class="d2l-clear"></div>
+					</div>
+				</div>
+				<div class="d2l-clear"></div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			
+(function(){
+var hpn=function(){
+if(window == window.parent) {return false;}
+var win = window.parent;
+try {while(true) {
+if(win.document === undefined) {return false;}
+var n= win.document.getElementById('d2l_navbar');
+var m = win.document.getElementById('d2l_minibar');
+if(n !== null || m !== null) {return true;}
+if(win == win.parent) {return false;}
+win = win.parent;
+}} catch(e) {}
+return false;};
+if(!hpn()) {return;}
+var rm=function(n) {if(n&&n.parentNode){n.parentNode.removeChild(n);}};
+var d=document;
+rm(d.getElementById('d2l_navbar'));
+rm(d.getElementById('d2l_minibar'));
+rm(d.getElementById('d2l_minibar_placeholder'));
+rm(d.getElementById('d2l_skipnav'));
+})();
+</script>
+		</header><span class="d2l-fragment"><a name="d2l_1_12_134" tabindex="-1"></a></span>
+		<div class="d2l-page-message-container"><div class="d2l-page-message d2l_1_48_432" id="d2l_sessionExpiryWarning"><div style="display:none;" id="d2l_sessionExpiryAlert" role="alert"><div class="d2l-container-icon d2l_1_49_576 d2l_1_50_645">
+			<div class="d2l-container-icon-inner d2l_1_51_702 d2l_1_52_99 d2l_1_53_451 d2l_1_54_778">
+				<h2 class="d2l-heading vui-heading-2">Are You Still There?</h2>
+				<div class="d2l-textblock">Your session expires after 180 minutes of inactivity, which protects your information in case you&#39;ve left your device without logging out.<br/>
+<br/>
+<strong>Hit a key or click anywhere to stay logged in.</strong></div>
+			</div>
+		</div>
+		</div><div style="display:none;" id="d2l_sessionExpiryCheck" role="alert"><div class="d2l-container-icon d2l_1_49_576 d2l_1_50_645">
+			<div class="d2l-container-icon-inner d2l_1_55_90 d2l_1_52_99 d2l_1_53_451 d2l_1_54_778">
+				<div class="d2l_1_56_280">
+					<h2 class="d2l-heading vui-heading-2 d2l-heading-none">Oh, There You Are!</h2>
+				</div>
+			</div>
+		</div>
+		</div></div>
+		</div>
+		<div class="d2l-page-bg">
+			<div>
+			</div>
+		</div>
+		<div class="d2l-page-main d2l-min-width d2l-max-width">
+			<div class="d2l-page-collapsepane-container"><div class="d2l-page-collapsepane-shadow"><div></div></div><div class="d2l-page-collapsepane" data-openfirst="D2L.O(&quot;__g1&quot;,5)();"><div class="d2l-page-collapsepane-handle"><h2 class="d2l-heading vui-offscreen">Side Panel</h2>
+			<a class="d2l-page-collapsepane-handle-link"><span class="d2l-page-collapsepane-handle-expand d2l-offscreen">Expand side panel</span><span class="d2l-page-collapsepane-handle-collapse d2l-offscreen">Collapse side panel</span></a></div><div class="d2l-page-collapsepane-content"><div class="d2l-page-collapsepane-content-inner d2l-scrollbar"><div class="d2l-page-collapsepane-content-padding"><div id="ContentNavigator" class="d2l-placeholder d2l-placeholder-live">
+				<div class="d2l-loading"><div class="d2l-textblock d2l-offscreen">Loading...</div>
+				</div>
+			</div>
+			</div></div></div><div class="d2l-page-collapsepane-end"></div></div></div><div class="d2l-page-main-padding">
+				<div class="d2l-page-header">
+					<div class="d2l-box-layout d2l_1_14_853">
+						<div class="d2l-box d2l-box-v d2l-header-top d2l_1_57_524">
+							<div class="d2l-box-layout d2l_1_14_853">
+								<div class="d2l-box d2l-box-h d2l_1_58_661 d2l_1_43_685">
+									<nav aria-labelledby="d2l_1_59_208">
+										<h2 class="d2l-heading vui-offscreen" id="d2l_1_59_208">Breadcrumb:</h2>
+										<ol class="vui-breadcrumbs d2l_1_60_807" aria-labelledby="d2l_1_59_208">
+											<li><a class="vui-link d2l-link" href="javascript:void(0);" onclick="D2L.O(&quot;__g1&quot;,6)();return false;">Table of Contents</a>
+											</li><li><a class="vui-link d2l-link" href="/d2l/le/content/171124/Home?itemIdentifier=D2L.LE.Content.ContentObject.ModuleCO-2228072">Assignment</a>
+											</li><li><a class="vui-link d2l-link" href="/d2l/le/content/171124/Home?itemIdentifier=D2L.LE.Content.ContentObject.ModuleCO-2394150">Assignment-2</a>
+											</li><li class="d2l-page-breadcrumb-title"><span class="d2l-breadcrumb-text">cpsc441-assignment-2-trace</span></li></ol>
+									</nav>
+								</div>
+							</div>
+						</div>
+						<div class="d2l-box d2l-box-v d2l-header-responsive-collapse-layout d2l_1_57_524">
+							<div class="d2l-box-layout d2l_1_14_853">
+								<div class="d2l-box d2l-box-h d2l_1_58_661 d2l_1_43_685">
+									<div class="d2l-page-title-c"><div class="d2l-box-layout d2l_1_61_738">
+										<div class="d2l-box d2l-box-h d2l_1_62_563 d2l_1_43_685">
+											<img class="d2l-image d2l_1_63_277 d2l_1_64_516" src="/d2l/img/lp/pixel.gif" alt="" />
+										</div>
+										<div class="d2l-box d2l-box-h d2l_1_58_661 d2l_1_43_685">
+											<h1 class="d2l-page-title d2l-heading vui-heading-1 bsi-set-solid">cpsc441-assignment-2-trace</h1>
+											<div id="d2l_1_65_798" class="d2l-floating-container d2l-hidden vui-dropdown-menu d2l-floating-container-autoclose">
+												<ul id="d2l_pageTitleActions" class="d2l-contextmenu">
+													<li id="d2l_1_66_164" class="d2l-contextmenu-item">
+														<a class="d2l_1_67_624 vui-dropdown-menu-item-link"><span>Submit Feedback</span></a>
+													</li>
+													<li id="d2l_1_68_680" class="d2l-contextmenu-item">
+														<a class="d2l_1_69_277 vui-dropdown-menu-item-link"><span>Reflect in ePortfolio</span></a>
+													</li>
+													<li id="d2l_1_70_868" class="d2l-contextmenu-item">
+														<a class="d2l_1_71_178 vui-dropdown-menu-item-link"><span>Download</span></a>
+													</li>
+													<li id="d2l_1_72_90" class="d2l-contextmenu-item">
+														<a class="d2l_1_73_940 vui-dropdown-menu-item-link"><span>View Metadata</span></a>
+													</li>
+												</ul>
+											</div><a id="d2l_1_4_180" class="d2l-contextmenu-ph" data-contextMenuId="d2l_pageTitleActions" role="button" aria-haspopup="true" title="Actions for &#39;cpsc441-assignment-2-trace&#39;" onclick="D2L.O(&quot;__g1&quot;,7)();return false;">
+												<img src="/d2l/img/lp/pixel.gif" class="d2l_1_75_324" alt="" />
+												<span class="d2l-offscreen">Actions for &#39;cpsc441-assignment-2-trace&#39;</span>
+											</a>
+											<div class="d2l-clear"></div>
+											<div class="d2l-page-title-view"><h2 class="d2l-heading vui-offscreen">PCAPNG File</h2>
+											</div></div>
+									</div>
+									</div></div>
+								<div class="d2l-box d2l-box-h d2l_1_57_524">
+									<div class="d2l-page-header-side">
+										<div class="d2l_1_76_780 d2l-inline">
+											<span class="d2l-toggle" id="d2l_1_77_883"><a class="d2l-imagelink d2l_1_80_339 d2l_1_81_443 vui-outline" id="d2l_1_78_476" href="javascript:void(0);" data-onclick="D2L.O(&quot;__g1&quot;,8)();" onclick="return false;" data-hoverClassName="d2l_1_81_443" title="Add Bookmark" aria-label="Add Bookmark"></a>
+											<a class="d2l-imagelink d2l-hidden d2l_1_82_263 d2l_1_83_85 vui-outline" id="d2l_1_79_272" href="javascript:void(0);" data-onclick="D2L.O(&quot;__g1&quot;,9)();" onclick="return false;" data-hoverClassName="d2l_1_83_85" title="Remove Bookmark" aria-label="Remove Bookmark"></a>
+											</span></div>
+										<a class="vui-button d2l-button d2l-button-text-hidden" id="d2l_1_84_916" data-onclick="D2L.O(&quot;__g1&quot;,10)();" title="View content in new window"><span class="vui-icon-custom d2l_1_85_298"></span><span class="vui-offscreen">View content in new window</span></a><div class="d2l_1_86_2 d2l-inline">
+											<div class="d2l-iterator">
+												<a class="d2l-iterator-button vui-button d2l-iterator-button-prev d2l-iterator-button-notext" role="button" href="/d2l/le/content/171124/navigateContent/83/Previous?pId=2394150" title="Previous "><img class="d2l-image d2l_1_87_591" src="/d2l/img/lp/pixel.gif" alt="" /><span class="d2l-offscreen">Previous </span>&nbsp;</a><a class="d2l-iterator-button vui-button d2l-iterator-button-next d2l-iterator-button-notext" role="button" href="/d2l/le/content/171124/navigateContent/83/Next?pId=2394150" title="Next"><span class="d2l-offscreen">Next</span>&nbsp;<img class="d2l-image d2l_1_88_728" src="/d2l/img/lp/pixel.gif" alt="" /></a></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="d2l-messagearea d2l_1_89_832" id="d2l_messagearea"></div><div id="ContentView" class="d2l-placeholder d2l-placeholder-live">
+					<div id="d2l_le_content_printcontainer">
+						<div class="d2l-fileviewer"><div class="d2l-fileviewer-image" data-location="/content/enforced/171124-W2017CPSC441L01/cpsc441-assignment-2-trace.pcapng?d2lSessionVal=dnFNPFuMMkRkPPoX7D0ZwIfv6&amp;ou=171124" data-alt="cpsc441-assignment-2-trace.pcapng" data-isprintable="True" data-expand-full-height="0" data-use-scrollable-container="0" data-is-dialog-style="0"></div></div>
+					</div>
+				</div>
+				<div class="d2l_1_90_296">
+					<div class="d2l_1_18_56">
+						<a class="vui-button d2l-button" id="d2l_1_6_435" data-onclick="D2L.O(&quot;__g1&quot;,11)();"><span class="vui-icon-custom d2l_1_91_482"></span>Reflect in ePortfolio</a><a class="vui-button d2l-button" id="d2l_1_7_226" data-onclick="D2L.O(&quot;__g1&quot;,12)();"><span class="vui-icon-custom d2l_1_92_372"></span>Download</a><a class="vui-button d2l-button" id="d2l_1_8_840" data-onclick="D2L.O(&quot;__g1&quot;,13)();"><span class="vui-icon-custom d2l_1_93_616"></span>Print</a></div>
+					<div class="d2l_1_30_1">
+						<div class="d2l_1_86_2 d2l-inline">
+							<div class="d2l-iterator">
+								<a class="d2l-iterator-button vui-button d2l-iterator-button-prev d2l-iterator-button-notext" role="button" href="/d2l/le/content/171124/navigateContent/83/Previous?pId=2394150" title="Previous "><img class="d2l-image d2l_1_87_591" src="/d2l/img/lp/pixel.gif" alt="" /><span class="d2l-offscreen">Previous </span>&nbsp;</a><a class="d2l-iterator-button vui-button d2l-iterator-button-next d2l-iterator-button-notext" role="button" href="/d2l/le/content/171124/navigateContent/83/Next?pId=2394150" title="Next"><span class="d2l-offscreen">Next</span>&nbsp;<img class="d2l-image d2l_1_88_728" src="/d2l/img/lp/pixel.gif" alt="" /></a></div>
+						</div>
+					</div>
+					<div class="d2l-clear"></div>
+				</div>
+				<div class="d2l_1_94_306">
+					<div id="AdditionalInfoPlaceholder" class="d2l-placeholder d2l-placeholder-live">
+						<ul class="vui-tabmenu" role="tablist" id="d2l_1_95_887">
+							<li class="vui-tabmenu-item vui-tabmenu-item-select" role="presentation">
+								<a id="d2l_1_96_814" href="javascript:void(0);" role="tab" aria-selected="true" tabindex="0" onclick="D2L.O(&quot;__g1&quot;,14)();">
+									Activity Details<span class="vui-tabmenu-item-blue">
+									</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+					<div class="d2l_1_97_598 d2l_1_98_168">
+						<div id="ActivityDetailsTabId">
+							<div class="d2l-box-layout d2l_1_14_853">
+								<div class="d2l-box d2l-box-h d2l_1_58_661 d2l_1_57_524">
+									<div class="d2l_1_99_804">
+										<div class=" d2l-inline">
+											<div id="d2l_1_0_747" class="d2l-placeholder d2l-placeholder-live">
+												<form data-method="post" data-scope="" class="d2l-form d2l-form-primary" id="CompletionTaskForm" onsubmit="return false;">
+													<div class=" d2l-inline">
+														<div class="d2l-container-icon d2l_1_49_576 d2l_1_100_180 d2l_1_49_576 d2l_1_101_6 d2l_1_102_222">
+															<div class="d2l-textblock vui-emphasis">You have viewed this topic</div>
+														</div>
+													</div>
+													<div class=" d2l-inline">
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class=" d2l-hidden" id="ResultsDetailsTabId">
+							<div id="ResultDetails" class="d2l-placeholder d2l-placeholder-inner d2l-placeholder-live">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="StatusPlaceholder" class="d2l-placeholder d2l-placeholder-live">
+					<div class="d2l-textblock d2l-textblock-secondary vui-emphasis">Last Visited Feb 12, 2017 8:03 PM</div>
+				</div>
+			</div>
+		</div>
+<script type="text/javascript" src="https://s.brightspace.com/lib/jquery/1.11.0/jquery.min.js"></script>
+		<script type="text/javascript" src="https://s.brightspace.com/lib/jqueryui/1.10.3/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="https://s.brightspace.com/lib/bsi/10.6.2-4/bsi.min.js"></script>
+		<script type="text/javascript" src="/d2l/common/js/D2L.LP.Web.Desktop.default.js?v=10.6.9.5092-98"></script>
+		<script type="text/javascript" src="/d2l/common/js/D2L.LE.Content.ContentViewer.default.js?v=10.6.9.5092-98"></script>
+		<script type="text/javascript" src="/d2l/common/js/D2L.LE.Content.Web.Desktop.default.js?v=10.6.9.5092-98"></script>
+		<script type="text/javascript" src="/d2l/common/js/D2L.LE.ToolIntegration.Content.default.js?v=10.6.9.5092-98"></script>
+		<script type="text/javascript" src="/d2l/common/assets/tock/tock.min.js?v=10.6.9.5092-98"></script>
+		<script type="text/javascript" src="/d2l/common/assets/ifvisiblejs/ifvisible.min.js?v=10.6.9.5092-98"></script>
+		<script type="text/javascript" src="/d2l/lms/content/static/scripts/d2l-nav-host-base.js?v=10.6.9.5092-98"></script>
+		<script type="text/javascript" src="/d2l/lms/content/static/scripts/d2l-nav-docked-host.js?v=10.6.9.5092-98"></script>
+		<script type="text/javascript">
+		//<![CDATA[
+			D2L.LP.Web.UI.Events.OnInit.AddListener( function() {
+D2L.O("__g1",15)();
+D2L.O("__g1",16)();
+D2L.O("__g1",17)();
+D2L.O("__g1",18)();
+D2L.O("__g1",19)();
+D2L.O("__g1",20)();
+D2L.O("__g1",21)();
+D2L.O("__g1",22)();
+D2L.O("__g1",23)();
+D2L.O("__g1",24)();
+D2L.O("__g1",25)();
+D2L.O("__g1",26)();
+} );
+
+			D2L.LP.Web.UI.Events.OnLoad.AddListener( function() {
+D2L.O("__g1",27)();
+D2L.O("__g1",28)();
+D2L.O("__g1",29)();
+} );
+
+			D2L.OR={
+"d2l_1_19_475":{"MenuFlyout.OpenFirstFunction":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialRender\",\"P\":[{\"_type\":\"id\",\"Value\":\"courseSelectorId\"},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Rpc.ConnectPartial\",\"P\":[{\"_type\":\"id\",\"Value\":\"courseSelectorId\"},\"GET\",{\"_type\":\"url\",\"Url\":\"\/d2l\/lp\/courseSelector\/171124\/InitPartial\"},{\"_type\":\"D2L.LP.Util.Dictionary\"},{\"_type\":\"D2L.LP.Web.UI.Rpc.RpcOptions\",\"keepAlive\":true,\"includeXsrfHeader\":false}],\"D\":true},0,false],\"D\":true}"}
+,
+"courseSelectorId":{"0":"{\"_type\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialHtmlRenderContext\",\"HeadingLevel\":2,\"ValidClassNames\":[],\"Scope\":\"\"}"}
+,
+"d2l_1_9_518":{"MenuFlyout.OpenFunction":"{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.If\",\"P\":[{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.CompareBoolean\",\"P\":[1,{\"_type\":\"call\",\"N\":\"D2L.VG\",\"P\":[\"ab_status_Messages\"]},true]},{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialRender\",\"P\":[{\"_type\":\"id\",\"Value\":\"AB_DL_PH_Messages\"},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Rpc.ConnectPartial\",\"P\":[{\"_type\":\"id\",\"Value\":\"AB_DL_PH_Messages\"},\"GET\",{\"_type\":\"call\",\"N\":\"D2L.LP.Web.Mvc.RouteLocation.Create\",\"P\":[\"\/d2l\/MiniBar\/{orgUnitId}\/ActivityFeed\/{action}\",{\"_type\":\"D2L.LP.Util.Dictionary\",\"Category\":2},{\"_type\":\"D2L.LP.Util.Dictionary\",\"action\":\"GetAlerts\",\"orgUnitId\":171124}]},{\"_type\":\"D2L.LP.Util.Dictionary\"},{\"_type\":\"D2L.LP.Web.UI.Rpc.RpcOptions\",\"keepAlive\":true,\"includeXsrfHeader\":false}],\"D\":true},0,false],\"D\":true}]}],\"D\":true},{\"_type\":\"func\",\"N\":\"D2L.VS\",\"P\":[\"ab_status_Messages\",false]},{\"_type\":\"func\",\"N\":\"D2L.LP.ActivityBar.OpenBucket\",\"P\":[\"alert_bucket_Messages\"]}]}",
+"MenuFlyout.CloseFunction":"{\"_type\":\"func\",\"N\":\"D2L.LP.ActivityBar.CloseBucket\",\"P\":[\"alert_bucket_Messages\"]}"}
+,
+"alert_bucket_Messages":{"aria-message":"\"You have new Messages\"",
+"title":"\"Message alerts\"",
+"new-alert-title":"\"Message alerts - You have new alerts\"",
+"flyout-id":"{\"_type\":\"id\",\"Value\":\"d2l_1_9_518\"}"}
+,
+"AB_DL_PH_Messages":{"0":"{\"_type\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialHtmlRenderContext\",\"HeadingLevel\":2,\"ValidClassNames\":[],\"Scope\":\"\"}"}
+,
+"d2l_1_10_901":{"MenuFlyout.OpenFunction":"{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.If\",\"P\":[{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.CompareBoolean\",\"P\":[1,{\"_type\":\"call\",\"N\":\"D2L.VG\",\"P\":[\"ab_status_Grades\"]},true]},{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialRender\",\"P\":[{\"_type\":\"id\",\"Value\":\"AB_DL_PH_Grades\"},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Rpc.ConnectPartial\",\"P\":[{\"_type\":\"id\",\"Value\":\"AB_DL_PH_Grades\"},\"GET\",{\"_type\":\"call\",\"N\":\"D2L.LP.Web.Mvc.RouteLocation.Create\",\"P\":[\"\/d2l\/MiniBar\/{orgUnitId}\/ActivityFeed\/{action}\",{\"_type\":\"D2L.LP.Util.Dictionary\",\"Category\":1},{\"_type\":\"D2L.LP.Util.Dictionary\",\"action\":\"GetAlerts\",\"orgUnitId\":171124}]},{\"_type\":\"D2L.LP.Util.Dictionary\"},{\"_type\":\"D2L.LP.Web.UI.Rpc.RpcOptions\",\"keepAlive\":true,\"includeXsrfHeader\":false}],\"D\":true},0,false],\"D\":true}]}],\"D\":true},{\"_type\":\"func\",\"N\":\"D2L.VS\",\"P\":[\"ab_status_Grades\",false]},{\"_type\":\"func\",\"N\":\"D2L.LP.ActivityBar.OpenBucket\",\"P\":[\"alert_bucket_Grades\"]}]}",
+"MenuFlyout.CloseFunction":"{\"_type\":\"func\",\"N\":\"D2L.LP.ActivityBar.CloseBucket\",\"P\":[\"alert_bucket_Grades\"]}"}
+,
+"alert_bucket_Grades":{"aria-message":"\"You have new Updates\"",
+"title":"\"Update alerts\"",
+"new-alert-title":"\"Update alerts - You have new alerts\"",
+"flyout-id":"{\"_type\":\"id\",\"Value\":\"d2l_1_10_901\"}"}
+,
+"AB_DL_PH_Grades":{"0":"{\"_type\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialHtmlRenderContext\",\"HeadingLevel\":2,\"ValidClassNames\":[],\"Scope\":\"\"}"}
+,
+"d2l_1_11_207":{"MenuFlyout.OpenFunction":"{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.If\",\"P\":[{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.CompareBoolean\",\"P\":[1,{\"_type\":\"call\",\"N\":\"D2L.VG\",\"P\":[\"ab_status_Alerts\"]},true]},{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialRender\",\"P\":[{\"_type\":\"id\",\"Value\":\"AB_DL_PH_Alerts\"},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Rpc.ConnectPartial\",\"P\":[{\"_type\":\"id\",\"Value\":\"AB_DL_PH_Alerts\"},\"GET\",{\"_type\":\"call\",\"N\":\"D2L.LP.Web.Mvc.RouteLocation.Create\",\"P\":[\"\/d2l\/MiniBar\/{orgUnitId}\/ActivityFeed\/{action}\",{\"_type\":\"D2L.LP.Util.Dictionary\",\"Category\":0},{\"_type\":\"D2L.LP.Util.Dictionary\",\"action\":\"GetAlerts\",\"orgUnitId\":171124}]},{\"_type\":\"D2L.LP.Util.Dictionary\"},{\"_type\":\"D2L.LP.Web.UI.Rpc.RpcOptions\",\"keepAlive\":true,\"includeXsrfHeader\":false}],\"D\":true},0,false],\"D\":true}]}],\"D\":true},{\"_type\":\"func\",\"N\":\"D2L.VS\",\"P\":[\"ab_status_Alerts\",false]},{\"_type\":\"func\",\"N\":\"D2L.LP.ActivityBar.OpenBucket\",\"P\":[\"alert_bucket_Alerts\"]}]}",
+"MenuFlyout.CloseFunction":"{\"_type\":\"func\",\"N\":\"D2L.LP.ActivityBar.CloseBucket\",\"P\":[\"alert_bucket_Alerts\"]}"}
+,
+"alert_bucket_Alerts":{"aria-message":"\"You have new Subscriptions\"",
+"title":"\"Subscription alerts\"",
+"new-alert-title":"\"Subscription alerts - You have new alerts\"",
+"flyout-id":"{\"_type\":\"id\",\"Value\":\"d2l_1_11_207\"}"}
+,
+"AB_DL_PH_Alerts":{"0":"{\"_type\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialHtmlRenderContext\",\"HeadingLevel\":2,\"ValidClassNames\":[],\"Scope\":\"\"}"}
+,
+"__g1":{"0":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.ReturnPoints.Set\",\"P\":[\"D2L.UXP.Profile.65570\"]}",
+"1":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.ReturnPoints.Set\",\"P\":[\"D2L.LP.Notification.Settings.171124\"]}",
+"2":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.ReturnPoints.Set\",\"P\":[\"D2L.UXP.Preferences.171124\"]}",
+"3":"{\"_type\":\"func\",\"N\":\"D2L.PT.Auth.Logout\",\"P\":[\"\/d2l\/logout\"]}",
+"4":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.OpenWindow\",\"P\":[\"NavbarLink_s_D2L.LE.Glossary.NavBarLinks.Glossary\",{\"_type\":\"url\",\"Url\":\"\/d2l\/lms\/glossary\/glossary.d2l?ou=171124\"},800,600,false,false]}",
+"5":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialRender\",\"P\":[{\"_type\":\"id\",\"Value\":\"ContentNavigator\"},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Rpc.ConnectPartial\",\"P\":[{\"_type\":\"id\",\"Value\":\"ContentNavigator\"},\"GET\",{\"_type\":\"url\",\"Url\":\"\/d2l\/le\/content\/171124\/viewobject\/2394160\/PartialNavigator?mId=2394150\"},{\"_type\":\"D2L.LP.Util.Dictionary\"},{\"_type\":\"D2L.LP.Web.UI.Rpc.RpcOptions\",\"keepAlive\":true,\"includeXsrfHeader\":false}],\"D\":true},0,false],\"D\":true}",
+"6":"{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.Navigate\",\"P\":[{\"_type\":\"url\",\"Url\":\"\/d2l\/le\/content\/171124\/Home?itemIdentifier=TOC\"}]}]}",
+"7":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.ContextMenu.Open\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_pageTitleActions\"},{\"_type\":\"id\",\"Value\":\"d2l_1_4_180\"},\"d2l_1_74_847\",null]}",
+"8":"{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.SetIsDisplayed\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_79_272\"},true]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.SetIsDisplayed\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_78_476\"},false]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.Focus\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_79_272\"}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Rpc.Connect\",\"P\":[\"POST\",{\"_type\":\"url\",\"Url\":\"\/d2l\/le\/content\/171124\/viewContent\/2394160\/ToggleBookmark?bookmarkStatus=1\"}],\"D\":true}]}",
+"9":"{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.SetIsDisplayed\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_78_476\"},true]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.SetIsDisplayed\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_79_272\"},false]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.Focus\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_78_476\"}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Rpc.Connect\",\"P\":[\"POST\",{\"_type\":\"url\",\"Url\":\"\/d2l\/le\/content\/171124\/viewContent\/2394160\/ToggleBookmark?bookmarkStatus=0\"}],\"D\":true}]}",
+"10":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.OpenWindow\",\"P\":[\"cpsc441-assignment-2-trace\",{\"_type\":\"url\",\"Url\":\"\/d2l\/le\/content\/171124\/fullscreen\/2394160\/View\"},1280,800,false,false]}",
+"11":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.MasterPages.Dialog.Open\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_6_435\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.Mvc.RouteLocation.Create\",\"P\":[\"\/d2l\/ep\/contentReflection\/{orgUnitId}\/{action}\/{id}\",{\"_type\":\"D2L.LP.Util.Dictionary\"},{\"_type\":\"D2L.LP.Util.Dictionary\",\"action\":\"previewReflection\",\"orgUnitId\":171124,\"id\":{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.MasterPages.Dialog.Open\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_6_435\"},{\"_type\":\"url\",\"Url\":\"\/d2l\/ep\/contentReflection\/171124\/CreateReflectionDialog?tag1=Assignment-2&tag2=W2017CPSC441L01&tag3=cpsc441-assignment-2-trace\"}],\"D\":true}}]}],\"D\":true}",
+"12":"{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.VS\",\"P\":[\"CheckTopicFileJSVariable\",{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Rpc.ConnectObject\",\"P\":[\"GET\",{\"_type\":\"url\",\"Url\":\"\/d2l\/le\/content\/171124\/topics\/files\/download\/2394160\/CheckFileTopicInfo\"}],\"D\":true}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.If\",\"P\":[{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.ObjectAccessor\",\"P\":[{\"_type\":\"call\",\"N\":\"D2L.VG\",\"P\":[\"CheckTopicFileJSVariable\"]},\"IsBroken\"]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.MasterPages.Dialog.InlineDialog\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_4_180\"},null,\"Error\",\"Unable to download. The file associated with this content topic cannot be found.\",\"\",\"OK\",\"\",\"Close this Dialog\",\"d2l-dialog-inline-body-alert\",true,false,false],\"D\":true},true,{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.If\",\"P\":[{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.ObjectAccessor\",\"P\":[{\"_type\":\"call\",\"N\":\"D2L.VG\",\"P\":[\"CheckTopicFileJSVariable\"]},\"IsPackageable\"]},{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.VS\",\"P\":[\"DownloadProgressDialogResultJSVariable\",{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.MasterPages.Dialog.Open\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_4_180\"},{\"_type\":\"url\",\"Url\":\"\/d2l\/le\/content\/171124\/2394160\/startdownload\/InitiateTopicDownload?openerId=d2l_1_4_180\"}],\"D\":true}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.If\",\"P\":[{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.CompareNumber\",\"P\":[5,{\"_type\":\"call\",\"N\":\"D2L.VG\",\"P\":[\"DownloadProgressDialogResultJSVariable\"]},0]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.Navigate\",\"P\":[{\"_type\":\"call\",\"N\":\"D2L.LP.Web.Mvc.RouteLocation.Create\",\"P\":[\"\/d2l\/le\/content\/{orgUnitId}\/downloads\/{downloadType}\/{jobId}\/{action}\",{\"_type\":\"D2L.LP.Util.Dictionary\"},{\"_type\":\"D2L.LP.Util.Dictionary\",\"action\":\"Download\",\"orgUnitId\":171124,\"downloadType\":\"Topic\",\"jobId\":{\"_type\":\"call\",\"N\":\"D2L.VG\",\"P\":[\"DownloadProgressDialogResultJSVariable\"]}}]}]},true,null],\"D\":true}]},true,{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.Navigate\",\"P\":[{\"_type\":\"url\",\"Url\":\"\/d2l\/le\/content\/171124\/topics\/files\/download\/2394160\/DirectFileTopicDownload\"}]}],\"D\":true}],\"D\":true}]}",
+"13":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.FileViewer.TryPrint\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_le_content_printcontainer\"}]}",
+"14":"{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.SetIsDisplayed\",\"P\":[{\"_type\":\"id\",\"Value\":\"ActivityDetailsTabId\"},true]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.SetIsDisplayed\",\"P\":[{\"_type\":\"id\",\"Value\":\"EvaluationSummaryTabId\"},false]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.SetIsDisplayed\",\"P\":[{\"_type\":\"id\",\"Value\":\"ResultsDetailsTabId\"},false]}]}",
+"15":"{\"_type\":\"func\",\"N\":\"D2L.VS\",\"P\":[\"ab_status_Messages\",true]}",
+"16":"{\"_type\":\"func\",\"N\":\"D2L.VS\",\"P\":[\"ab_status_Grades\",true]}",
+"17":"{\"_type\":\"func\",\"N\":\"D2L.VS\",\"P\":[\"ab_status_Alerts\",true]}",
+"18":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.FloatingContainer.Init\"}",
+"19":"{\"_type\":\"func\",\"N\":\"D2L.PT.Auth.SessionTimeout.Init\",\"P\":[\"65570\",180,5,{\"_type\":\"id\",\"Value\":\"d2l_sessionExpiryWarning\"},\"d2l_sessionExpiryAlert\",\"d2l_sessionExpiryCheck\",{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Rpc.ConnectObject\",\"P\":[\"POST\",{\"_type\":\"url\",\"Url\":\"\/d2l\/lp\/auth\/session\/extend\"}],\"D\":true},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.MasterPages.Dialog.OpenHelper\",\"P\":[{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Html.Dom.GetActiveElement\"},{\"_type\":\"url\",\"Url\":\"\/d2l\/lp\/auth\/session\/Expired?isUsernamePasswordLogin=0&isLogout=0\"}],\"D\":true},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.MasterPages.Dialog.OpenHelper\",\"P\":[{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Html.Dom.GetActiveElement\"},{\"_type\":\"url\",\"Url\":\"\/d2l\/lp\/auth\/session\/Expired?isUsernamePasswordLogin=0&isLogout=1\"}],\"D\":true},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.MasterPages.Dialog.InlineDialog\",\"P\":[null,{\"_type\":\"id\",\"Value\":\"d2l_1_103_155\"},\"Warning\",\"New User Session\",\"The current user session has changed, so the links and content on this page may not behave as expected.\",\"OK\",\"\",\"Close this Dialog\",\"d2l-dialog-inline-body-warning\",true,false,false],\"D\":true},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.MasterPages.Dialog.Inline.Abort\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_103_155\"}]}]}",
+"20":"{\"_type\":\"func\",\"N\":\"D2LMathML.DesktopInit\",\"P\":[\"https:\/\/s.brightspace.com\/lib\/mathjax\/2.6.1\/MathJax.js?config=MML_HTMLorMML\",\"https:\/\/s.brightspace.com\/lib\/mathjax\/2.6.1\/MathJax.js?config=TeX-AMS-MML_HTMLorMML%2cSafe\"]}",
+"21":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.Authentication.Xsrf.Init\",\"P\":[\"d2l_referrer\",\"8X3d5BMR70WSM1pBPvS0b44ltjSGSEGG\",-1404287262]}",
+"22":"{\"_type\":\"func\",\"N\":\"D2L.LP.ActivityBar.Init\",\"P\":[{\"_type\":\"url\",\"Url\":\"\/d2l\/activityFeed\/checkForNewAlerts\"},120,\"alert_bucket_{0}\",\"ab_status_{0}\"]}",
+"23":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Common.Controls.MessageArea.Init\",\"P\":[\"d2l_messagearea\",{\"_type\":\"url\",\"Url\":\"\/d2l\/lp\/validation\/errors\"}]}",
+"24":"{\"_type\":\"func\",\"N\":\"D2L.LP.Globalization.Locale.Init\",\"P\":[0,{\"_type\":\"anon\",\"DecimalSeparator\":\".\",\"GroupSeparator\":\",\",\"NumberNegativePattern\":1,\"PercentPositivePattern\":0,\"PercentNegativePattern\":0,\"PercentSymbol\":\"%\",\"NegativeSign\":\"-\",\"NativeDigits\":[\"0\",\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\"],\"UseNativeDigits\":false,\"GroupSizes\":[3],\"IntegerRegex\":\"^([\\\\(-]*(([01234567890123456789]?[01234567890123456789]?([01234567890123456789](,[01234567890123456789][01234567890123456789][01234567890123456789])*)?))[\\\\)-]*)$|^([\\\\(-]*[01234567890123456789]+[\\\\)-]*)$\",\"DecimalRegex\":\"^([\\\\(-]*(([01234567890123456789]?[01234567890123456789]?([01234567890123456789](,[01234567890123456789][01234567890123456789][01234567890123456789])*)))(\\\\.[01234567890123456789]+)?[\\\\)-]*)$|^([\\\\(-]*[01234567890123456789]*\\\\.?[01234567890123456789]+[\\\\)-]*)$\"},{\"_type\":\"anon\",\"InputDateFormat\":\"M\/d\/yyyy\",\"Is24HourClock\":false,\"NativeDigits\":[\"0\",\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\"],\"UseNativeDigits\":false,\"TimeFormat\":\"h:mm tt\",\"AmDesignator\":\"AM\",\"PmDesignator\":\"PM\",\"ShortMonthNames\":[\"Jan\",\"Feb\",\"Mar\",\"Apr\",\"May\",\"Jun\",\"Jul\",\"Aug\",\"Sep\",\"Oct\",\"Nov\",\"Dec\",\"\"],\"LongMonthNames\":[\"January\",\"February\",\"March\",\"April\",\"May\",\"June\",\"July\",\"August\",\"September\",\"October\",\"November\",\"December\",\"\"],\"ShortDayOfWeekNames\":[\"Sun\",\"Mon\",\"Tue\",\"Wed\",\"Thu\",\"Fri\",\"Sat\"]},{\"_type\":\"anon\",\"TextDirection\":1},{\"_type\":\"anon\",\"Culture\":\"en-ca\"},{\"_type\":\"anon\",\"JustNow\":\"just now\",\"OneMinuteAgo\":\"1 minute ago\",\"TwoMinutesAgo\":\"2 minutes ago\",\"MinutesAgoMany\":\"[0] minutes ago\",\"OneHourAgo\":\"1 hour ago\",\"TwoHoursAgo\":\"2 hours ago\",\"ManyHoursAgo\":\"[0] hours ago\",\"YesterdayTime\":\"yesterday at [0]\",\"DayOfWeekTime\":\"[0] at [1]\",\"MonthDayTime\":\"[0] at [1]\",\"Now\":1486954994137}]}",
+"25":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Rpc.Initialize\",\"P\":[{\"_type\":\"url\",\"Url\":\"\/d2l\/login?target=%2fd2l%2fle%2fcontent%2f171124%2fviewContent%2f2394160%2fView&sessionExpired=1\"},\"Error: unable to complete your request.\",{\"_type\":\"D2L.LP.Util.Dictionary\"},{\"_type\":\"D2L.LP.Util.Dictionary\",\"flash\":{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.FlashMessages.RpcReceivePayloadProvider\"},\"session\":{\"_type\":\"func\",\"N\":\"D2L.PT.Auth.SessionTimeout.RpcReceivePayloadProvider\"},\"messageArea\":{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Common.Controls.MessageArea.RpcReceivePayloadProvider\"},\"OR\":{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.ObjectRepository.RpcReceivePayloadProvider\"},\"JS\":{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.RpcReceiveJsPayloadProvider\"},\"CSS\":{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.RpcReceiveCssPayloadProvider\"},\"ariaMessages\":{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Aria.RpcReceivePayloadProvider\"}}]}",
+"26":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.InlineHelp.Init\",\"P\":[{\"_type\":\"url\",\"Url\":\"\/d2l\/lp\/inlineHelp\/171124\/help\"}]}",
+"27":"{\"_type\":\"func\",\"N\":\"D2L.LE.ViewContent.ContentViewer.OnLoad\",\"P\":[171124,2394160,null,{\"_type\":\"url\",\"Url\":\"\/d2l\/le\/content\/171124\/viewContent\/2394160\/53c937f5-cbe6-4e79-b891-20b890737b6f\/TrackViewing\"},{\"_type\":\"url\",\"Url\":\"\/d2l\/le\/content\/171124\/viewContent\/2394160\/53c937f5-cbe6-4e79-b891-20b890737b6f\/FinalizeView\"},0,true]}",
+"28":"{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.SetIsDisplayed\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_8_840\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.FileViewer.IsPrintable\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_le_content_printcontainer\"}]}]}]}",
+"29":"{\"_type\":\"func\",\"N\":\"D2L.LE.ToolIntegration.Content.CompletionStatusChanged.Actions.RegisterHandler\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialRender\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_0_747\"},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Rpc.ConnectPartial\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_0_747\"},\"GET\",{\"_type\":\"url\",\"Url\":\"\/d2l\/le\/content\/171124\/object\/2394160\/UpdateCompletion\"},{\"_type\":\"D2L.LP.Util.Dictionary\"},{\"_type\":\"D2L.LP.Web.UI.Rpc.RpcOptions\",\"keepAlive\":true,\"includeXsrfHeader\":false}],\"D\":true},0,false],\"D\":true}]}"}
+,
+"ContentNavigator":{"0":"{\"_type\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialHtmlRenderContext\",\"HeadingLevel\":2,\"ValidClassNames\":[],\"Scope\":\"\"}"}
+,
+"d2l_1_66_164":{"0":"{\"_type\":\"D2L.LP.Util.Dictionary\",\"enabledIconCss\":\"d2l_1_67_624\",\"disabledIconCss\":\"\",\"onClick\":{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Legacy.MasterPages.Dialog.Open\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_4_180\"},{\"_type\":\"url\",\"Url\":\"\/d2l\/lms\/content\/viewer\/actions\/submit_feedback_popup.d2l?tId=2394160&ou=171124\"},\"Save\",null,\"\",550,500,\"Close this Dialog\",[{\"_type\":\"D2L.LP.Web.UI.Legacy.MasterPages.DialogLegacy+ButtonData\",\"IsPrimary\":true,\"Key\":\"submitButton\",\"Param\":\"\",\"Text\":\"Submit\",\"ResponseType\":1,\"IsEnabled\":true},{\"_type\":\"D2L.LP.Web.UI.Legacy.MasterPages.DialogLegacy+ButtonData\",\"IsPrimary\":false,\"Key\":\"cancelButton\",\"Param\":\"\",\"Text\":\"Cancel\",\"ResponseType\":0,\"IsEnabled\":true}]],\"D\":true}}"}
+,
+"d2l_1_68_680":{"0":"{\"_type\":\"D2L.LP.Util.Dictionary\",\"enabledIconCss\":\"d2l_1_69_277\",\"disabledIconCss\":\"\",\"onClick\":{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.MasterPages.Dialog.Open\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_4_180\"},{\"_type\":\"call\",\"N\":\"D2L.LP.Web.Mvc.RouteLocation.Create\",\"P\":[\"\/d2l\/ep\/contentReflection\/{orgUnitId}\/{action}\/{id}\",{\"_type\":\"D2L.LP.Util.Dictionary\"},{\"_type\":\"D2L.LP.Util.Dictionary\",\"action\":\"previewReflection\",\"orgUnitId\":171124,\"id\":{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.MasterPages.Dialog.Open\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_4_180\"},{\"_type\":\"url\",\"Url\":\"\/d2l\/ep\/contentReflection\/171124\/CreateReflectionDialog?tag1=Assignment-2&tag2=W2017CPSC441L01&tag3=cpsc441-assignment-2-trace\"}],\"D\":true}}]}],\"D\":true}}"}
+,
+"d2l_1_70_868":{"0":"{\"_type\":\"D2L.LP.Util.Dictionary\",\"enabledIconCss\":\"d2l_1_71_178\",\"disabledIconCss\":\"\",\"onClick\":{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.VS\",\"P\":[\"CheckTopicFileJSVariable\",{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Rpc.ConnectObject\",\"P\":[\"GET\",{\"_type\":\"url\",\"Url\":\"\/d2l\/le\/content\/171124\/topics\/files\/download\/2394160\/CheckFileTopicInfo\"}],\"D\":true}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.If\",\"P\":[{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.ObjectAccessor\",\"P\":[{\"_type\":\"call\",\"N\":\"D2L.VG\",\"P\":[\"CheckTopicFileJSVariable\"]},\"IsBroken\"]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.MasterPages.Dialog.InlineDialog\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_4_180\"},null,\"Error\",\"Unable to download. The file associated with this content topic cannot be found.\",\"\",\"OK\",\"\",\"Close this Dialog\",\"d2l-dialog-inline-body-alert\",true,false,false],\"D\":true},true,{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.If\",\"P\":[{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.ObjectAccessor\",\"P\":[{\"_type\":\"call\",\"N\":\"D2L.VG\",\"P\":[\"CheckTopicFileJSVariable\"]},\"IsPackageable\"]},{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.VS\",\"P\":[\"DownloadProgressDialogResultJSVariable\",{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Desktop.MasterPages.Dialog.Open\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_1_4_180\"},{\"_type\":\"url\",\"Url\":\"\/d2l\/le\/content\/171124\/2394160\/startdownload\/InitiateTopicDownload?openerId=d2l_1_4_180\"}],\"D\":true}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.If\",\"P\":[{\"_type\":\"call\",\"N\":\"D2L.LP.Web.UI.Html.JavaScript.CompareNumber\",\"P\":[5,{\"_type\":\"call\",\"N\":\"D2L.VG\",\"P\":[\"DownloadProgressDialogResultJSVariable\"]},0]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.Navigate\",\"P\":[{\"_type\":\"call\",\"N\":\"D2L.LP.Web.Mvc.RouteLocation.Create\",\"P\":[\"\/d2l\/le\/content\/{orgUnitId}\/downloads\/{downloadType}\/{jobId}\/{action}\",{\"_type\":\"D2L.LP.Util.Dictionary\"},{\"_type\":\"D2L.LP.Util.Dictionary\",\"action\":\"Download\",\"orgUnitId\":171124,\"downloadType\":\"Topic\",\"jobId\":{\"_type\":\"call\",\"N\":\"D2L.VG\",\"P\":[\"DownloadProgressDialogResultJSVariable\"]}}]}]},true,null],\"D\":true}]},true,{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.Navigate\",\"P\":[{\"_type\":\"url\",\"Url\":\"\/d2l\/le\/content\/171124\/topics\/files\/download\/2394160\/DirectFileTopicDownload\"}]}],\"D\":true}],\"D\":true}]}}"}
+,
+"d2l_1_72_90":{"0":"{\"_type\":\"D2L.LP.Util.Dictionary\",\"enabledIconCss\":\"d2l_1_73_940\",\"disabledIconCss\":\"\",\"onClick\":{\"_type\":\"pipe\",\"P\":[{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.ReturnPoints.Set\",\"P\":[\"D2L.Core.Metadata.Web.Navigation.GetViewEditMetadataReturnPointKey\",{\"_type\":\"url\",\"Url\":\"\/d2l\/le\/content\/171124\/viewContent\/2394160\/View\"}]},{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Html.Dom.Navigate\",\"P\":[{\"_type\":\"url\",\"Url\":\"\/d2l\/lp\/metadata\/view.d2l?fp=mc&ou=171124&type=2&objectId=2394160\"}]}]}}"}
+,
+"d2l_1_65_798":{"onClose":"{\"_type\":\"func\",\"N\":\"D2L.LP.Web.UI.Desktop.Controls.ContextMenu.OnCloseHandler\",\"P\":[{\"_type\":\"id\",\"Value\":\"d2l_pageTitleActions\"}]}"}
+,
+"d2l_pageTitleActions":{"Context":"{\"_type\":\"D2L.LP.Util.Dictionary\",\"floatingContainerId\":{\"_type\":\"id\",\"Value\":\"d2l_1_65_798\"}}"}
+,
+"ContentView":{"0":"{\"_type\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialHtmlRenderContext\",\"HeadingLevel\":2,\"ValidClassNames\":[],\"Scope\":\"\"}"}
+,
+"AdditionalInfoPlaceholder":{"0":"{\"_type\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialHtmlRenderContext\",\"HeadingLevel\":2,\"ValidClassNames\":[],\"Scope\":\"\"}"}
+,
+"d2l_1_0_747":{"0":"{\"_type\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialHtmlRenderContext\",\"HeadingLevel\":2,\"ValidClassNames\":[],\"Scope\":\"\"}"}
+,
+"ResultDetails":{"0":"{\"_type\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialHtmlRenderContext\",\"HeadingLevel\":2,\"ValidClassNames\":[],\"Scope\":\"\"}"}
+,
+"StatusPlaceholder":{"0":"{\"_type\":\"D2L.LP.Web.UI.Html.PartialRendering.PartialHtmlRenderContext\",\"HeadingLevel\":2,\"ValidClassNames\":[],\"Scope\":\"\"}"}
+
+};
+
+		//]]>
+		</script>
+	</body>
+</html>
